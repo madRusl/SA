@@ -1,13 +1,9 @@
-# SA
-
-##installation
-
 generate secret key:
 ```python
 python3 -c 'import os; print(os.urandom(24).hex())'
 ```
 
-replace secret_key in dockerfile env
+replace secret_key value in docker-compose
 
 run compose
 ```docker
