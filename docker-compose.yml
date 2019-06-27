@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres:10
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - flask-app-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  app:
+    container_name: flask
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-flask
+    environment:
+      - FLASK_ENV=docker
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+
+volumes:
+  flask-app-db:
+    name: flask-app-db

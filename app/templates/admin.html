@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} Admin {% endblock title %}
+
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+    <div class="col-6">
+      <br>
+        <p> logged in as <b>{{ session["username"] }}</b> </p>
+        <form method="POST" action="{{url_for('export_hardware')}}">
+          <button type="submit" class="btn btn-outline-dark btn-sm">Export Hardware</button>
+        </form>
+        <br>
+        <form method="POST" action="{{url_for('export_application')}}">
+          <button type="submit" class="btn btn-outline-dark btn-sm">Export Applications</button>
+        </form>
+    </div>
+    </div>
+</div>
+
+{% endblock content %}

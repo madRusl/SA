@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} 404 {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+
+    <p>404 error</p>
+    <p><a href="{{ url_for('index') }}">Back to site</a></p>
+    <img src="/static/404.jpeg" class="img-rounded" alt="404 meme not found">
+    
+  </div>
+
+{% endblock%}

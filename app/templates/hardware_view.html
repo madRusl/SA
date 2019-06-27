@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %} Hardware {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="container-fluid">
+    
+    <br>
+    <input class="form-control" id="myInput" type="text" placeholder="Type something in the input field to search the table by columns ..">
+    <br>
+
+    <table cellspacing="0" class="table table-hover table-bordered table-sm">
+      <thead class="thead-light">
+        <tr class="info">
+          <th class="th-sm">serial_number</th>
+          <th class="th-sm">cpu</th>
+          <th class="th-sm">cores</th>
+          <th class="th-sm">clock</th>
+          <th class="th-sm">ram</th>
+          <th class="th-sm">kernel</th>
+          <th class="th-sm">OS version</th>
+          <th class="th-sm">hostname</th>
+          <th class="th-sm">usernames</th>
+          <th class="th-sm">date_stored</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+      {% for i, j in iter_list %}
+        <tr>
+          <td class="text-left">{{ i["serial_number"] }}</td>
+          <td class="text-left">{{ i["cpu"] }}</td>
+          <td class="text-left">{{ i["cpu_cores"] }}</td>
+          <td class="text-left">{{ i["cpu_clock"] }}</td>
+          <td class="text-left">{{ i["ram"] }}</td>
+          <td class="text-left">{{ j["kernel_version"] }}</td>
+          <td class="text-left">{{ j["os_version"] }}</td>
+          <td class="text-left">{{ j["hostname"] }}</td>
+          <td class="text-left">{{ j["usernames"] }}</td>
+          <td class="text-left">{{ j["date_stored"] }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+{%- endblock scripts %}

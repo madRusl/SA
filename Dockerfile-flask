@@ -1,0 +1,16 @@
+FROM python:3
+
+COPY requirements.txt /app/requirements.txt
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /app
+
+EXPOSE 5000
+
+ENV DATABASE_URL=postgresql://postgres:password@postgres/webapp_db
+ENV SECRET_KEY=Th3r3_1s_4lw4y5_4N07h3r_W4y_T0_s3t_7h3_k3y
+
+CMD ["python", "app.py", "--host=0.0.0.0:5000"]

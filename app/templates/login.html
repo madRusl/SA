@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container py-5">
+        <div class="row align-self-center">
+            <div class="mt-12 col-md-12">
+                <div class="row ">
+                    <div class="col-md-4 mx-auto">
+                        <div class="card rounded-1">
+                            <div class="card-header">
+                                <h3 class="mb-0" >Login</h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-signin"  action="{{ url_for('login') }}" method="post">
+                                  <div class="col-md-12 login-form-1">
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" placeholder="Username *" value="" name="username"/>
+                                          </div>
+                                          <div class="form-group">
+                                              <input type="password" name="password" class="form-control" placeholder="Password *" value="" name="password"/>
+                                          </div>
+                                          <div class="form-group">
+                                              <input type="submit" class="btn btn-dark btn-block" value="Login" />
+                                          </div>
+                                  </div>
+                              </form>
+                            </div>
+                            <div class="container">
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    <div class="col-md-12">
+                                        <div class="alert alert-dark alert-dismissible">
+                                        {% for message in messages %}
+                                            <a href="{{ url_for('login') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <strong>{{ message }}</strong>
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
