@@ -1,0 +1,21 @@
+---
+# task file for sshd_update
+
+    - lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#PasswordAuthentication yes'
+        line: "PasswordAuthentication no"
+        state: present
+      become: yes
+
+    - lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#ChallengeResponseAuthentication yes'
+        line: "ChallengeResponseAuthentication no"
+        state: present
+      become: yes
+
+    - name: post hardware_data.xml to flask
+      raw: 'launchctl unload /System/Library/LaunchDaemons/ssh.plist && launchctl load /System/Library/LaunchDaemons/ssh.plist '
+      args:
+        executable: /bin/bash

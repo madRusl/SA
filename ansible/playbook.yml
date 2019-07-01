@@ -1,0 +1,11 @@
+---
+- hosts: all
+
+  tasks:
+
+  roles:
+    - post_get_hardware
+    - post_get_system
+    - post_get_app
+    # - update_sshd_config
+    # - set_authorized_key

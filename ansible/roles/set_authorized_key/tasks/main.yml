@@ -1,0 +1,8 @@
+---
+# task file for sshd_update
+
+    - name: Set authorized key taken from file
+      authorized_key:
+        user: root8
+        state: present
+        key: "{{ lookup('file', '/Users/pinkpony/.ssh/is_corporate.pub') }}"

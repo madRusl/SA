@@ -1,0 +1,12 @@
+---
+# tasks file for install_java
+
+    - name: get sys_data.xml
+      raw: "system_profiler SPSoftwareDataType -xml > /tmp/sys_data.xml"
+      args:
+        executable: /bin/bash
+
+    - name: post sys_data.xml to flask
+      raw: "curl -X POST -d @/tmp/sys_data.xml  -H 'Accept: application/xml'  -H 'Content-Type: application/xml' \"http://172.22.214.66:5000/api/system?serialnumber=$(system_profiler SPHardwareDataType | awk '/Serial/ {print $4}')&userlist=$(dscl . list /Users | grep -vE '_|root|admin|nobody|daemon|Guest')\""
+      args:
+        executable: /bin/bash

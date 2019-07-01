@@ -1,0 +1,12 @@
+---
+# tasks file for post hardware
+
+    - name: get hardware_data.xml
+      raw: "system_profiler SPHardwareDataType -xml > /tmp/hardware_data.xml"
+      args:
+        executable: /bin/bash
+
+    - name: post hardware_data.xml to flask
+      raw: 'curl -X POST -d @/tmp/hardware_data.xml  -H "Accept: application/xml"  -H "Content-Type: application/xml" http://172.22.214.66:5000/api/hardware?ip_addr=$(ipconfig getifaddr en0)'
+      args:
+        executable: /bin/bash

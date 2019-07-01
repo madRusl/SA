@@ -1,0 +1,7 @@
+[all]
+172.22.214.[1:254]
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=
+ansible_ssh_pass=
