@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %} Serial Info {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="container-fluid">
+
+    <br>
+    <input class="form-control" id="myInput" type="text" placeholder="Type something in the input field to search the table by columns ..">
+    <br>
+
+    <table cellspacing="0" class="table table-hover table-bordered table-sm">
+      <thead class="thead-light">
+        <tr class="info">
+          <th class="th-sm">application_name</th>
+          <th class="th-sm">pkg_source</th>
+          <th class="th-sm">version</th>
+          <th class="th-sm">last_modified</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+      {% for i, j in iter_list %}
+        <tr>
+          <td class="text-left">{{ i["application_name"] }}</td>
+          <td class="text-left">{{ i["pkg_source"] }}</td>
+          <td class="text-left">{{ j["version"] }}</td>
+          <td class="text-left">{{ i["last_modified"] }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+{%- endblock scripts %}

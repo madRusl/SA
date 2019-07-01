@@ -57,6 +57,17 @@ def hardware_view():
     return render_template('hardware_view.html', iter_list = macbook_list)
 
 
+@app.route('/hw_info/<serial>', methods=['GET'])
+@is_logged
+def hw_info(serial):
+    get_serial = Macbook.query.filter_by(serial_number=serial).first()
+    results = db.session.query(Application, Application_Version) \
+                        .join(Application_Version) \
+                        .filter(Application.applications == get_serial).all()
+    print(results)
+    return render_template('hw_info.html', iter_list = results)
+
+
 @app.route('/api/hardware', methods=['POST'])
 def add_hardware():
     ip_addr = None
@@ -116,10 +127,10 @@ def add_hardware():
 
 
 @app.route('/export_hardware', methods=['POST'])
+@is_logged
 def export_hardware():
     try:
         results = db.session.query(Macbook, System_Info).join(System_Info).all()
-        print(results)
         data = ExportToCsv.export_hw_csv(results)
         current_date = strftime("%Y-%m-%d")
         return send_file('../exporthw.csv', attachment_filename ='export_' + current_date +'.csv', as_attachment=True)
@@ -224,6 +235,7 @@ def add_applications():
 
 
 @app.route('/export_application', methods=['POST'])
+@is_logged
 def export_application():
     try:
         results = db.session.query(Application, Application_Version, Macbook, System_Info) \

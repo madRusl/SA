@@ -1,31 +1,6 @@
 <script type="text/javascript">
-/*
-   Willmaster Table Sort
-   Version 1.1
-   August 17, 2016
-   Updated GetDateSortingKey() to correctly sort two-digit months and days numbers with leading 0.
-   Version 1.0, July 3, 2011
-
-   Will Bontrager
-   https://www.willmaster.com/
-   Copyright 2011,2016 Will Bontrager Software, LLC
-
-   This software is provided "AS IS," without
-   any warranty of any kind, without even any
-   implied warranty such as merchantability
-   or fitness for a particular purpose.
-   Will Bontrager Software, LLC grants
-   you a royalty free license to use or
-   modify this software provided this
-   notice appears on all copies.
-*/
-//
-// One placed to customize - The id value of the table tag.
 
 var TableIDvalue = "indextable";
-
-//
-//////////////////////////////////////
 var TableLastSortedColumn = -1;
 function SortTable() {
 var sortColumn = parseInt(arguments[0]);

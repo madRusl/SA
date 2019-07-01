@@ -10,4 +10,6 @@ COPY . /app
 
 EXPOSE 5000
 
+CMD python fixture.py
+
 CMD ["python", "app.py", "--host=0.0.0.0:5000"]
