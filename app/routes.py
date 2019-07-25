@@ -53,7 +53,7 @@ def app_view():
 @app.route('/hardware_view', methods=['GET'])
 @is_logged
 def hardware_view():
-    macbook_list = db.session.query(Macbook, System_Info).join(System_Info)
+    macbook_list = db.session.query(Macbook, System_Info).join(System_Info).distinct(Macbook.serial_number).all()
     return render_template('hardware_view.html', iter_list = macbook_list)
 
 
@@ -64,7 +64,6 @@ def hw_info(serial):
     results = db.session.query(Application, Application_Version) \
                         .join(Application_Version) \
                         .filter(Application.applications == get_serial).all()
-    print(results)
     return render_template('hw_info.html', iter_list = results)
 
 

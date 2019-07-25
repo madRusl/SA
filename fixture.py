@@ -106,10 +106,6 @@ def insert_data():
         data = [{
                     "user": "root8",
                     "pass": "Route_66"
-                },
-                {
-                    "user": "admin",
-                    "pass": "admin"
                 }]
 
         for item in data:
@@ -119,7 +115,6 @@ def insert_data():
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as e:
         print(e)
-        print('insert error')
     finally:
         cur.close()
         conn.close()

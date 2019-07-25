@@ -1,7 +1,9 @@
-[all]
-172.22.214.[1:254]
+[minsk]
+172.22.213.[2:254]
+172.22.214.[2:254]
+172.22.215.[2:254]
 
-[all:vars]
+[minsk:vars]
 ansible_connection=ssh
-ansible_user=
-ansible_ssh_pass=
+ansible_user=root8
+ansible_ssh_pass=Route_66
