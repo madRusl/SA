@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} Applications {% endblock %}
+{% block title %} Serial Info {% endblock %}
 
 {% block head %}
 {{ super() }}
@@ -8,29 +8,39 @@
 
 {% block content %}
 
-<div class="container-fluid">
+  <div class="container-fluid">
 
-  <br>
-  <input class="form-control" id="myInput" type="text" placeholder="Type something in the input field to search the table by columns ..">
-  <br>
+    <br>
+    <input class="form-control" id="myInput" type="text" placeholder="Type something in the input field to search the table by columns ..">
+    <br>
 
-  <div class="table-responsive">
     <table id="indextable" class="table table-hover table-bordered table-sm"">
       <thead class="thead-light">
         <tr class="info">
           <th class="text-left"><a href="javascript:SortTable(0,'T');">application_name</a></th>
+          <th class="text-left"><a href="javascript:SortTable(2,'N');">version</a></th>
+          <th class="text-left"><a href="javascript:SortTable(3,'D','mdy');">last_modified</a></th>
+          <th class="text-left"><a href="javascript:SortTable(4,'T');">serial</a></th>
+          <th class="text-left"><a href="javascript:SortTable(5,'T');">hostnames</a></th>
+          <th class="text-left"><a href="javascript:SortTable(6,'T');">usernames</a></th>
+
         </tr>
       </thead>
       <tbody id="myTable">
-      {% for i in iter_list %}
+      {% for i, j, k, l in iter_list %}
         <tr>
-          <td class="text-left"><a href="{{ url_for('app_info', app = i.application_name) }}">{{ i["application_name"]|safe }}</a></td>
+          <td class="text-left">{{ i["application_name"] }}</td>
+          <td class="text-left">{{ j["version"] }}</td>
+          <td class="text-left">{{ i["last_modified"] }}</td>
+          <td class="text-left">{{ k["serial_number"] }}</td>
+          <td class="text-left">{{ l["hostname"] }}</td>
+          <td class="text-left">{{ l["usernames"] }}</td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
+
   </div>
-</div>
 
 {% endblock %}
 
@@ -46,6 +56,7 @@ $(document).ready(function(){
   });
 });
 </script>
+
 <script type="text/javascript">
 
 var TableIDvalue = "indextable";

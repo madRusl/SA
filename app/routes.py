@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 from app.exports import ExportToCsv
 from time import strftime
 from app.check_location import convert_ipv4, check_ipv4_in
+from sqlalchemy import desc
 
 
 @app.route('/', methods=['GET'])
@@ -46,15 +47,35 @@ def admin():
 @app.route('/app_view', methods=['GET'])
 @is_logged
 def app_view():
-    app_list = db.session.query(Application, Application_Version).join(Application_Version)
+    # app_list = db.session.query(Application, Application_Version).join(Application_Version)
+    app_list = db.session.query(Application).distinct(Application.application_name).filter(Application.pkg_source == 'package_source_other').all()
     return render_template('app_view.html', iter_list = app_list)
 
-
-@app.route('/hardware_view', methods=['GET'])
+@app.route('/app_info/<app>', methods=['GET'])
 @is_logged
-def hardware_view():
-    macbook_list = db.session.query(Macbook, System_Info).join(System_Info).distinct(Macbook.serial_number).all()
-    return render_template('hardware_view.html', iter_list = macbook_list)
+def app_info(app):
+    print(app)
+    # get_app = Application.query.filter_by(application_name=app).first()
+    # results = db.session.query(Macbook, System_Info, Application, Application_Version) \
+    #                     .join(System_Info) \
+    #                     .join(Application) \
+    #                     .join(Application_Version) \
+    #                     .filter(Application.application_name == app).all()
+    results = db.session.query(Application, Application_Version, Macbook, System_Info).distinct(Application_Version.version) \
+                        .outerjoin(Application_Version) \
+                        .outerjoin(Macbook) \
+                        .outerjoin(System_Info) \
+                        .filter(Application.application_name == app).order_by(desc(Application_Version.version)).all()
+
+    print(results)
+    return render_template('app_info.html', iter_list = results)
+
+
+@app.route('/hw_view', methods=['GET'])
+@is_logged
+def hw_view():
+    macbook_list = db.session.query(Macbook, System_Info).outerjoin(System_Info).distinct(Macbook.serial_number).all()
+    return render_template('hw_view.html', iter_list = macbook_list)
 
 
 @app.route('/hw_info/<serial>', methods=['GET'])

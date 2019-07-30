@@ -73,10 +73,10 @@ class System_Info(db.Model):
     __tablename__ = 'system_info'
 
     id = db.Column(db.Integer, primary_key=True)
-    os_version = db.Column(db.String(255))
-    kernel_version = db.Column(db.String(255))
-    hostname = db.Column(db.String(255))
-    usernames = db.Column(db.String(255))
+    os_version = db.Column(db.String(255), default='None')
+    kernel_version = db.Column(db.String(255), default='None')
+    hostname = db.Column(db.String(255), default='None')
+    usernames = db.Column(db.String(255), default='None')
     date_stored = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     macbook_id = db.Column(db.Integer, db.ForeignKey('macbooks.id'))
 
@@ -118,7 +118,7 @@ class Application_Version(db.Model):
     __tablename__ = 'app_versions'
 
     id = db.Column(db.Integer, primary_key=True)
-    version = db.Column(db.String(255))
+    version = db.Column(db.String(255), default='None')
     date_stored = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     app_id = db.Column(db.Integer, db.ForeignKey('apps.id'))
 
