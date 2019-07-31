@@ -25,8 +25,15 @@ curl -X POST -d @/tmp/sys_data.xml  -H "Accept: application/xml"  -H "Content-Ty
 curl -X POST -d @/tmp/app_data.xml  -H 'Accept: application/xml'  -H 'Content-Type: application/xml' http://127.0.0.1:5000/api/applications?serialnumber=$(system_profiler SPHardwareDataType | awk '/Serial/ {print $4}')
 ```
 
+###### create db with tables and data
+```ansible roles
+change destination ip in each role:
+http://127.0.0.1:5000/api/... -> http://destination-ip:5000/api/...
+```
+
+
 #### ansible
-install ansible and in hosts file set values for:
+install ansible on any machine and in hosts file set values for:
 ```
 ansible_user=
 ansible_ssh_pass=
