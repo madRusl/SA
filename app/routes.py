@@ -47,27 +47,17 @@ def admin():
 @app.route('/app_view', methods=['GET'])
 @is_logged
 def app_view():
-    # app_list = db.session.query(Application, Application_Version).join(Application_Version)
     app_list = db.session.query(Application).distinct(Application.application_name).filter(Application.pkg_source == 'package_source_other').all()
     return render_template('app_view.html', iter_list = app_list)
 
 @app.route('/app_info/<app>', methods=['GET'])
 @is_logged
 def app_info(app):
-    print(app)
-    # get_app = Application.query.filter_by(application_name=app).first()
-    # results = db.session.query(Macbook, System_Info, Application, Application_Version) \
-    #                     .join(System_Info) \
-    #                     .join(Application) \
-    #                     .join(Application_Version) \
-    #                     .filter(Application.application_name == app).all()
     results = db.session.query(Application, Application_Version, Macbook, System_Info).distinct(Application_Version.version) \
                         .outerjoin(Application_Version) \
                         .outerjoin(Macbook) \
                         .outerjoin(System_Info) \
                         .filter(Application.application_name == app).order_by(desc(Application_Version.version)).all()
-
-    print(results)
     return render_template('app_info.html', iter_list = results)
 
 
